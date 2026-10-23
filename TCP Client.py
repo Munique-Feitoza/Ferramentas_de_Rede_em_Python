@@ -1,34 +1,46 @@
-import socket
+#!/usr/bin/env python3
+"""
+NetTools Suite - Cliente TCP Interativo & Medidor de RTT
+Desenvolvido por Munique Feitoza
+"""
+
+import sys
+import os
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from core.ui import Colors, print_banner, print_section, print_info, print_error
+from core.tcp_tools import TCPClientTester
+
 
 def main():
-    # Cria o socket TCP
-    client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-    # Define o host e a porta do servidor
-    host = socket.gethostname()  # Ou coloque o IP do servidor
-    port = 3000
+    print_banner()
+    print_section("CLIENTE TCP INTERATIVO & RTT TESTER")
 
     try:
-        # Tenta se conectar ao servidor
-        client_socket.connect((host, port))
-        print(f"Conectado ao servidor {host}:{port}")
+        host = input(f"{Colors.CYAN}Host/IP do servidor [Padrão: 127.0.0.1]: {Colors.RESET}").strip() or "127.0.0.1"
+        port_s = input(f"{Colors.CYAN}Porta [Padrão: 3000]: {Colors.RESET}").strip() or "3000"
 
-        # Recebe a mensagem (até 1024 bytes)
-        message = client_socket.recv(1024)
-        print("Mensagem recebida do servidor:", message.decode('ascii'))
+        if not port_s.isdigit():
+            print_error("Porta inválida.")
+            return
 
-    except socket.error as e:
-        # Captura qualquer erro relacionado a socket
-        print(f"Erro de conexão: {e}")
+        port = int(port_s)
+        client = TCPClientTester(host, port)
 
-    except Exception as e:
-        # Captura qualquer outro tipo de erro
-        print(f"Ocorreu um erro: {e}")
+        print("\nEscolha a operação:")
+        print(f"  {Colors.PINK}[1]{Colors.RESET} Sessão Interativa de Envio/Recebimento (com Dump Hexadecimal)")
+        print(f"  {Colors.PINK}[2]{Colors.RESET} Teste de Desempenho e Medição de Latência (RTT & Jitter)")
+        
+        op = input(f"\n{Colors.PINK}Opção [1-2]: {Colors.RESET}").strip()
 
-    finally:
-        # Garante que o socket será fechado, mesmo se der erro
-        client_socket.close()
-        print("Conexão encerrada.")
+        if op == "2":
+            client.test_latency(count=5)
+        else:
+            client.interactive_session()
+
+    except (KeyboardInterrupt, EOFError):
+        print("\nOperação cancelada.")
+
 
 if __name__ == "__main__":
     main()

@@ -1,181 +1,141 @@
-# Projeto: Ferramentas de Rede em Python
-
-Este projeto contém diversas ferramentas de rede simples e úteis desenvolvidas em Python, incluindo scanner de portas, banner grabbing, servidor e cliente TCP, e automação de varredura com Nmap.
-
----
-
-## 📂 Conteúdo do Projeto
-
-### 1. **TCP Server e TCP Client**
-- **TCP Server (`TCP Server.py`)**
-  - Cria um servidor TCP que aguarda conexões.
-  - Quando um cliente se conecta, o servidor envia a mensagem "Hello World!" e fecha a conexão.
-  
-- **TCP Client (`TCP Client.py`)**
-  - Se conecta ao servidor TCP criado.
-  - Recebe a mensagem enviada e a imprime no terminal.
-
-### 2. **Scanner com Nmap (`Server.py`)**
-- Ferramenta interativa que usa a biblioteca `python-nmap` para realizar diferentes tipos de varredura em um IP:
-  - Varredura **SYN ACK** (TCP).
-  - Varredura **UDP**.
-  - Varredura **Abrangente** (TCP + UDP + detecção de sistema operacional e serviços).
-- Solicita ao usuário o IP e o tipo de varredura.
-
-### 3. **Banner Grabber (`BannerGrabber.py`)**
-- Conecta a um IP e porta fornecidos.
-- Captura e exibe o **banner** do serviço que está rodando (por exemplo, servidores HTTP, FTP, etc.).
-- Útil para identificar serviços de rede.
-
-### 4. **Port Scanner (`PortScanner.py`)**
-- Escaneia uma **porta específica** de um IP informado.
-- Informa se a porta está **aberta** ou **fechada**.
+# 🛡️ NetTools Cyber Recon Toolkit v2.0
+> **Suite de Auditoria de Redes, Fingerprinting de Serviços e Reconhecimento Cibersegurança em Python Puro.**  
+> *Desenvolvido por [Munique Feitoza](https://github.com/muniquefeitoza).*
 
 ---
 
-## ⚙️ Requisitos
+[![Python 3.8+](https://img.shields.io/badge/Python-3.8%2B-blue?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
+[![License: MIT](https://img.shields.io/badge/License-MIT-pink?style=for-the-badge)](LICENSE)
+[![Zero-Dependencies](https://img.shields.io/badge/Dependencies-Zero%20(Pure%20Stdlib)-brightgreen?style=for-the-badge)]()
+[![Cyberpunk TUI](https://img.shields.io/badge/Interface-Cyberpunk%20TUI-9cf?style=for-the-badge)]()
 
-- Python 3.x
-- Bibliotecas:
-  - `socket` (já incluída no Python)
-  - `python-nmap` (para o scanner com Nmap)
+O **NetTools Suite** é uma plataforma modular de auditoria de superfície de ataque, diagnóstico de conectividade e análise forense de portas desenvolvida com foco em **altíssimo desempenho, concorrência assíncrona e zero dependências externas obrigatórias**.
 
-### Instalação do `python-nmap`
-```bash
-pip install python-nmap
-```
-
-⚠️ **Observação:** Para usar `python-nmap`, você precisa ter o **Nmap** instalado no seu sistema:
-- [Download do Nmap](https://nmap.org/download.html)
+Projetado tanto para operadores de segurança ofensiva/defensiva quanto para administradores de infraestrutura que necessitam de um canivete suíço imediato em qualquer terminal Linux/macOS/Windows sem depender de gerenciadores de pacotes externos.
 
 ---
 
-## 🚀 Como Usar
+## ⚡ Principais Capacidades
 
-1. Clone o repositório:
-```bash
-git clone https://github.com/seu-usuario/seu-repositorio.git
-```
-2. Acesse a pasta do projeto:
-```bash
-cd nome-do-projeto
-```
-3. Execute o script que deseja utilizar:
-```bash
-python3 TCP\ Server.py
-python3 TCP\ Client.py
-python3 Server.py
-python3 BannerGrabber.py
-python3 PortScanner.py
+- 🚀 **Motor Assíncrono Concorrente (`asyncio`)**: Varre milhares de portas TCP por segundo utilizando semáforos de concorrência adaptativos e cálculo de latência (RTT) por porta.
+- 🔍 **Banner Grabbing & Service Fingerprinting Multiprocolo**:
+  - Probes sob medida para **HTTP/HTTPS** (análise de cabeçalhos `Server`, `X-Powered-By`), **SSH**, **FTP**, e **SMTP**.
+  - **Inspeção Criptográfica SSL/TLS**: Extrai automaticamente a versão de cifras (`TLSv1.3`), emissor do certificado (CA), `CommonName` (CN), SAN e validade temporal.
+- 📡 **Servidor TCP Listener & Packet Inspector**:
+  - Capturador multiconexão assíncrono com **Hexadecimal Dump** padrão Wireshark/xxd em tempo real.
+- 📶 **Cliente TCP & RTT Tester**:
+  - Medição de latência real de conexão (mínima, média, máxima, jitter e perda de pacotes) + terminal interativo de envio de dados.
+- 📊 **Gerador de Relatórios Profissionais de Segurança**:
+  - Exporta relatórios completos de auditoria e superfície de ataque em **Markdown estruturado** ou **JSON** com heurísticas automáticas de risco (ex: FTP/Telnet sem criptografia, SMB exposto).
+- 🎨 **Interface Cyberpunk Terminal (TUI)**:
+  - Cores ANSI 24-bit TrueColor, tabelas dinâmicas, barras de progresso nativas e banners ASCII.
+
+---
+
+## 🏗️ Arquitetura do Repositório
+
+```text
+Ferramentas_de_Rede_em_Python/
+├── core/                         # Motor de Alta Performance Modular
+│   ├── __init__.py               # Metadados e versão do Toolkit
+│   ├── ui.py                     # Motor ANSI TrueColor, Banners, Tabelas e Barras de Progresso
+│   ├── port_scanner.py           # Scanner TCP assíncrono e catálogo de portas conhecidas
+│   ├── banner_grabber.py         # Probes inteligentes (HTTP, TLS, SSH, FTP, SMTP)
+│   ├── tcp_tools.py              # Listener TCP assíncrono multicliente & Testador de RTT
+│   └── reporter.py               # Exportador para Markdown e JSON com análise de risco
+├── main.py                       # Orquestrador com Menu Interativo TUI e CLI completa
+├── PortScanner.py                # Wrapper moderno para varredura de porta específica
+├── Scanner.py                    # Scanner híbrido (Nmap + Native Async Engine)
+├── BannerGrabber.py              # Wrapper moderno para banner grabbing individual
+├── TCP Server.py                 # Servidor de escuta TCP com packet dump
+├── TCP Client.py                 # Cliente TCP interativo com medição de latência
+├── requirements.txt              # Zero dependências obrigatórias
+└── README.md                     # Documentação completa do projeto
 ```
 
 ---
 
-## 📚 Conceitos Aprendidos / Utilizados
+## 🚀 Como Executar
 
-- Programação de **sockets** em Python.
-- Varredura de **portas** TCP e UDP.
-- Captura de **banners** de serviços.
-- Uso de **Nmap** via biblioteca Python.
-- Tratamento de exceções e conexão de rede segura.
-
----
-
-# 📸 Exemplos de Uso
-
-## 1. TCP Server e TCP Client
-
-### Execução do `TCP Server.py`
+### 1. Modo Interativo (TUI Cyberpunk)
+Basta executar o orquestrador principal sem argumentos para abrir o painel de controle interativo:
 ```bash
-Servidor iniciado em DESKTOP-1234:3000
-Aguardando conexões...
-Conexão recebida de: ('192.168.1.5', 58734)
+python3 main.py
 ```
 
-### Execução do `TCP Client.py`
+### 2. Linha de Comando (CLI Avançada)
+
+#### 🔹 Varredura Rápida de Portas Assíncrona
 ```bash
-Conectado ao servidor DESKTOP-1234:3000
-Mensagem recebida do servidor: Hello World!
-Conexão encerrada.
+# Varre as principais portas TCP mais comuns (Top Ports)
+python3 main.py --scan 192.168.1.1
+
+# Varre um intervalo customizado com 250 threads assíncronas
+python3 main.py --scan 10.0.0.1 --ports 1-1024 --concurrency 250
+
+# Varre portas específicas
+python3 main.py --scan target.com --ports 21,22,80,443,3306,8080
 ```
 
----
-
-## 2. Scanner com Nmap (`Server.py`)
-
-### Execução
+#### 🔹 Auditoria Completa com Fingerprint e Relatório
 ```bash
-Bem-vindo à ferramenta de automação de varredura com Nmap!
-<----------------------------------------------------------->
-Digite o endereço IP para escanear: 192.168.1.1
-O endereço IP informado é: 192.168.1.1
+# Executa varredura, captura banners e salva relatório em Markdown
+python3 main.py --audit 192.168.1.50 --ports top -o auditoria_servidor.md
 
-Escolha o tipo de varredura que deseja realizar:
-1. Varredura SYN ACK (TCP)
-2. Varredura UDP
-3. Varredura Abrangente
+# Salva em JSON estruturado para ingestão em pipelines de SIEM / SecOps
+python3 main.py --audit 192.168.1.50 --ports 80,443,8080 -o scan.json
+```
 
-Digite o número da opção desejada: 1
+#### 🔹 Banner Grabbing & Inspeção SSL/TLS
+```bash
+# Identifica versão de servidor web ou certificado SSL
+python3 main.py --banner google.com 443
 
-Você selecionou a opção: 1
+# Identifica versão de daemon SSH
+python3 main.py --banner 192.168.1.1 22
+```
 
-Versão do Nmap: (7, 93)
-Informações da varredura: {'tcp': 'syn'}
-Status do IP: up
-Protocolos detectados: ['tcp']
-Portas abertas (tcp): dict_keys([22, 80, 443])
+#### 🔹 Servidor Listener TCP com Hex Dump
+```bash
+# Ouve na porta 4444 exibindo todos os pacotes recebidos em hexadecimal e ASCII
+python3 main.py --server --port 4444
+```
+
+#### 🔹 Teste de Latência de Rede (RTT & Jitter)
+```bash
+python3 main.py --rtt 1.1.1.1 53
 ```
 
 ---
 
-## 3. Banner Grabber (`BannerGrabber.py`)
+## 📸 Exemplo de Relatório Gerado (Markdown)
 
-### Execução
-```bash
-=== Banner Grabber ===
-Digite o endereço IP para escanear: 192.168.1.1
-Digite o número da porta para escanear: 80
+```markdown
+# 🛡️ Relatório de Auditoria de Superfície de Rede
+**Alvo:** `192.168.1.1` | **Data:** 2026-10-23 12:00:00
 
-Banner capturado: HTTP/1.1 400 Bad Request
-Server: nginx/1.18.0
-Date: Sun, 27 Apr 2025 15:00:00 GMT
+| Porta | Protocolo | Estado | Serviço Provável | Latência | Banner / Detalhes |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `22` | TCP | **ABERTA** | SSH | 1.84 ms | `SSH-2.0-OpenSSH_9.6p1` |
+| `80` | TCP | **ABERTA** | HTTP | 2.15 ms | `nginx/1.24.0` |
+| `443` | TCP | **ABERTA** | HTTPS | 2.40 ms | `TLSv1.3 (Issuer: Let's Encrypt)` |
+
+## 🔍 Análise de Risco & Recomendações
+- ⚠️ **Porta 80 (HTTP) sem HTTPS:** O serviço HTTP está exposto sem o correspondente HTTPS configurado.
 ```
 
 ---
 
-## 4. Port Scanner (`PortScanner.py`)
+## 🔒 Aviso de Uso Ético (Disclaimer)
 
-### Execução
-```bash
-=== Scanner de Porta ===
-Digite o endereço IP ou hostname a ser escaneado: 192.168.1.1
-Digite o número da porta a ser escaneada: 22
-
-Porta 22 está ABERTA no host 192.168.1.1.
-```
+Esta ferramenta foi desenvolvida estritamente para **fins educacionais, auditorias de segurança autorizadas, diagnósticos de rede e testes de conformidade defensiva**. O escaneamento de redes de terceiros sem autorização prévia por escrito pode constituir infração legal conforme a legislação vigente (como o Marco Civil da Internet e a Lei nº 12.737/2012 no Brasil).
 
 ---
 
-# 📋 Observações
+## 👩‍💻 Autora
 
-- Alguns resultados podem variar dependendo do firewall ou das configurações do destino.
-- Para escanear portas baixas (0-1024) em sistemas Unix/Linux, pode ser necessário executar como **sudo**.
-- Use estas ferramentas com responsabilidade! ⚠️
+**Munique Feitoza**  
+- GitHub: [@muniquefeitoza](https://github.com/muniquefeitoza)  
+- LinkedIn: [Munique Feitoza](https://linkedin.com)  
 
----
-
-# 🌟 Finalizando
-
-Este projeto inclui:
-- Scripts de rede em Python 💻
-- README.md completo 📗
-- Exemplos de uso 📷
-
-Bons estudos e boas explorações de rede! 🚀
-
----
-
-## 📌 License
-
-Projeto licenciado sob a Licença MIT.
-
+Licença: [MIT](LICENSE)

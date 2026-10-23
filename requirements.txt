@@ -1,1 +1,4 @@
-python-nmap
+# NetTools Suite 2.0 - Dependências
+# O toolkit é 100% autônomo e funcional utilizando exclusivamente a Biblioteca Padrão do Python 3 (asyncio, socket, ssl, json, etc.).
+# Dependências opcionais (para integração legada com binário nmap no SO):
+# python-nmap>=0.7.1

@@ -1,46 +1,42 @@
-import socket
+#!/usr/bin/env python3
+"""
+NetTools Suite - Servidor TCP Multicliente & Inspecionador de Pacotes
+Desenvolvido por Munique Feitoza
+"""
+
+import sys
+import os
+import asyncio
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from core.ui import Colors, print_banner, print_section, print_info, print_success, print_error
+from core.tcp_tools import AsyncTCPServer
+
 
 def main():
-    # Cria um socket TCP
-    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-    # Define o host e a porta
-    host = socket.gethostname()  # Pode ser o IP da máquina também
-    port = 3000
+    print_banner()
+    print_section("SERVIDOR TCP LISTENER & PACKET INSPECTOR")
 
     try:
-        # Faz o bind do socket para o host e a porta especificados
-        server_socket.bind((host, port))
-        print(f"Servidor iniciado em {host}:{port}")
+        host = input(f"{Colors.CYAN}Host/Interface para escuta [Padrão: 0.0.0.0]: {Colors.RESET}").strip() or "0.0.0.0"
+        port_s = input(f"{Colors.CYAN}Porta para escuta [Padrão: 3000]: {Colors.RESET}").strip() or "3000"
+        
+        if not port_s.isdigit():
+            print_error("Porta inválida.")
+            return
 
-        # Coloca o servidor em modo de escuta (pode aceitar até 3 conexões pendentes)
-        server_socket.listen(3)
-        print("Aguardando conexões...")
+        port = int(port_s)
+        server = AsyncTCPServer(host=host, port=port, echo_mode=True)
+        
+        try:
+            asyncio.run(server.start())
+        except KeyboardInterrupt:
+            server.stop()
+            print_info("\nServidor encerrado com sucesso.")
 
-        while True:
-            # Aceita uma nova conexão
-            client_socket, address = server_socket.accept()
-            print(f"Conexão recebida de: {address}")
+    except (KeyboardInterrupt, EOFError):
+        print("\nOperação cancelada.")
 
-            # Mensagem a ser enviada para o cliente
-            message = "Hello World!"
-            client_socket.send(message.encode('ascii'))
-
-            # Fecha a conexão com o cliente
-            client_socket.close()
-
-    except socket.error as e:
-        # Captura erros relacionados a socket
-        print(f"Erro de socket: {e}")
-
-    except Exception as e:
-        # Captura qualquer outro tipo de erro
-        print(f"Ocorreu um erro: {e}")
-
-    finally:
-        # Garante que o servidor será fechado corretamente
-        server_socket.close()
-        print("Servidor encerrado.")
 
 if __name__ == "__main__":
     main()
