@@ -1,17 +1,17 @@
 # 🛡️ NetTools Cyber Recon Toolkit v2.0
 > **Suite de Auditoria de Redes, Fingerprinting de Serviços e Reconhecimento Cibersegurança em Python Puro.**  
-> *Desenvolvido por [Munique Feitoza](https://github.com/muniquefeitoza).*
+> *Desenvolvido por [Munique Feitoza](https://github.com/Munique-Feitoza).*
 
 ---
 
 [![Python 3.8+](https://img.shields.io/badge/Python-3.8%2B-blue?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
-[![License: MIT](https://img.shields.io/badge/License-MIT-pink?style=for-the-badge)](LICENSE)
+[![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue?style=for-the-badge)](LICENSE)
 [![Zero-Dependencies](https://img.shields.io/badge/Dependencies-Zero%20(Pure%20Stdlib)-brightgreen?style=for-the-badge)]()
 [![Cyberpunk TUI](https://img.shields.io/badge/Interface-Cyberpunk%20TUI-9cf?style=for-the-badge)]()
 
 O **NetTools Suite** é uma plataforma modular de auditoria de superfície de ataque, diagnóstico de conectividade e análise forense de portas desenvolvida com foco em **altíssimo desempenho, concorrência assíncrona e zero dependências externas obrigatórias**.
 
-Projetado tanto para operadores de segurança ofensiva/defensiva quanto para administradores de infraestrutura que necessitam de um canivete suíço imediato em qualquer terminal Linux/macOS/Windows sem depender de gerenciadores de pacotes externos.
+Projetado tanto para operadores de segurança defensiva quanto para administradores de infraestrutura que necessitam de um canivete suíço imediato em qualquer terminal Linux/macOS/Windows sem depender de gerenciadores de pacotes externos.
 
 ---
 
@@ -50,6 +50,7 @@ Ferramentas_de_Rede_em_Python/
 ├── TCP Server.py                 # Servidor de escuta TCP com packet dump
 ├── TCP Client.py                 # Cliente TCP interativo com medição de latência
 ├── requirements.txt              # Zero dependências obrigatórias
+├── LICENSE                       # Licença GPL-2.0
 └── README.md                     # Documentação completa do projeto
 ```
 
@@ -57,20 +58,26 @@ Ferramentas_de_Rede_em_Python/
 
 ## 🚀 Como Executar
 
-### 1. Modo Interativo (TUI Cyberpunk)
+### 1. Clonar o Repositório
+```bash
+git clone https://github.com/Munique-Feitoza/Ferramentas_de_Rede_em_Python.git
+cd Ferramentas_de_Rede_em_Python
+```
+
+### 2. Modo Interativo (TUI Cyberpunk)
 Basta executar o orquestrador principal sem argumentos para abrir o painel de controle interativo:
 ```bash
 python3 main.py
 ```
 
-### 2. Linha de Comando (CLI Avançada)
+### 3. Linha de Comando (CLI Avançada)
 
 #### 🔹 Varredura Rápida de Portas Assíncrona
 ```bash
 # Varre as principais portas TCP mais comuns (Top Ports)
 python3 main.py --scan 192.168.1.1
 
-# Varre um intervalo customizado com 250 threads assíncronas
+# Varre um intervalo customizado com 250 conexões simultâneas
 python3 main.py --scan 10.0.0.1 --ports 1-1024 --concurrency 250
 
 # Varre portas específicas
@@ -135,7 +142,7 @@ Esta ferramenta foi desenvolvida estritamente para **fins educacionais, auditori
 ## 👩‍💻 Autora
 
 **Munique Feitoza**  
-- GitHub: [@muniquefeitoza](https://github.com/muniquefeitoza)  
-- LinkedIn: [Munique Feitoza](https://linkedin.com)  
+- GitHub: [@Munique-Feitoza](https://github.com/Munique-Feitoza)  
+- LinkedIn: [Munique Feitoza](https://www.linkedin.com/in/munique-feitoza-77034b231/)  
 
-Licença: [MIT](LICENSE)
+Licença: [GPL-2.0](LICENSE)
